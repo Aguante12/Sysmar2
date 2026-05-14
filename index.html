@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> ClothesEM | Moda para toda la familia</title>
+    <meta name="description"
+        content="Colección exclusiva de moda para toda la familia. Elegancia y calidad premium en cada prenda.">
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts: Outfit & Playfair Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+        rel="stylesheet">
+    <!-- Phosphor Icons (para el carrito) -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+
+<body>
+
+    <!-- Navegación -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">ClothesEM</a>
+            <ul class="nav-links">
+                <li><a href="#inicio" class="active">Inicio</a></li>
+                <li><a href="#coleccion">Colección</a></li>
+                <li><a href="#nosotros">Nosotros</a></li>
+            </ul>
+            <div class="nav-icons">
+                <div class="nav-search">
+                    <i class="ph ph-magnifying-glass"></i>
+                    <input type="text" id="search-input" placeholder="Buscar...">
+                </div>
+                <button class="icon-btn cart-btn" aria-label="Carrito de compras">
+                    <i class="ph ph-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="inicio" class="hero">
+        <div class="hero-content">
+            <span class="badge">Nueva Colección 2026</span>
+            <h1>Elegancia para <br>Cada Momento</h1>
+            <p>Moda exclusiva para toda la familia. Descubre prendas diseñadas con la máxima calidad y un estilo
+                atemporal.</p>
+            <div class="hero-actions">
+                <a href="#coleccion" class="btn btn-primary">Ver Colección</a>
+                <a href="#nosotros" class="btn btn-secondary">Conocer Más</a>
+            </div>
+        </div>
+        <div class="hero-image-container">
+            <img src="assets/conjunto_gris.png" alt="Moda Eliana Magali" class="hero-image">
+        </div>
+    </header>
+
+    <!-- Colección (Productos) -->
+    <section id="coleccion" class="collection">
+        <div class="section-header">
+            <h2>Nuestra Colección</h2>
+            <p>Explora nuestra selección exclusiva para toda la familia</p>
+        </div>
+
+        <div class="shop-layout">
+            <!-- Barra Lateral de Filtros -->
+            <aside class="sidebar">
+                <div class="filter-group">
+                    <h3>Género</h3>
+                    <ul class="filter-list">
+                        <li><button class="gender-btn active" data-gender="all"><i class="ph ph-users"></i> Todos</button></li>
+                        <li><button class="gender-btn" data-gender="femenino"><i class="ph ph-gender-female"></i> Femenino</button></li>
+                        <li><button class="gender-btn" data-gender="masculino"><i class="ph ph-gender-male"></i> Masculino</button></li>
+                    </ul>
+                </div>
+
+                <div class="filter-group">
+                    <h3>Categorías</h3>
+                    <ul class="filter-list">
+                        <li><button class="sub-filter-btn active" data-sub="all"><i class="ph ph-house-line"></i> Todo tipo</button></li>
+                        <li><button class="sub-filter-btn" data-sub="remeras"><i class="ph ph-t-shirt"></i> Remeras</button></li>
+                        <li><button class="sub-filter-btn" data-sub="camperas"><i class="ph ph-hoodie"></i> Abrigos</button></li>
+                        <li><button class="sub-filter-btn" data-sub="pantalones"><i class="ph ph-pants"></i> Pantalones</button></li>
+                        <li><button class="sub-filter-btn" data-sub="zapatillas"><i class="ph ph-sneaker-move"></i> Zapatillas</button></li>
+                        <li><button class="sub-filter-btn" data-sub="completo"><i class="ph ph-butterfly"></i> Enteros y Outfits</button></li>
+                    </ul>
+                </div>
+            </aside>
+
+
+            <!-- Grilla de Productos -->
+            <main class="shop-main">
+                <div id="shop-grid" class="product-grid">
+                    <!-- Los productos se cargarán dinámicamente -->
+                </div>
+                <div id="pagination-container" class="pagination">
+                    <button id="prev-page" class="btn-nav"><i class="ph ph-caret-left"></i></button>
+                    <span id="page-info">Página 1 de 1</span>
+                    <button id="next-page" class="btn-nav"><i class="ph ph-caret-right"></i></button>
+                </div>
+            </main>
+        </div>
+
+    </section>
+
+    <!-- Modal de Galería (Lightbox) -->
+    <div id="gallery-modal" class="modal">
+        <span class="close-modal"><i class="ph ph-x"></i></span>
+        <div class="modal-content">
+            <button class="modal-prev"><i class="ph ph-caret-left"></i></button>
+            <div class="modal-main-display">
+                <img id="modal-img" src="" alt="Vista del producto">
+                <div class="modal-details">
+                    <h2 id="modal-product-name">Nombre Producto</h2>
+                    <p id="modal-product-price" class="modal-price">$0</p>
+                    
+                    <div class="modal-options">
+                        <div class="option-group">
+                            <label>Seleccionar Talle:</label>
+                            <div id="modal-sizes" class="chip-group"></div>
+                        </div>
+                        <div class="option-group">
+                            <label>Cantidad:</label>
+                            <div class="quantity-selector">
+                                <button id="modal-qty-minus" class="qty-btn"><i class="ph ph-minus"></i></button>
+                                <span id="modal-qty-val">1</span>
+                                <button id="modal-qty-plus" class="qty-btn"><i class="ph ph-plus"></i></button>
+                            </div>
+                            <small id="modal-stock-display" style="display: block; margin-top: 0.5rem; opacity: 0.7; font-weight: 500;"></small>
+                        </div>
+                    </div>
+
+                    <button id="modal-add-to-cart" class="btn btn-primary" style="width: 100%; margin-top: 2rem;">
+                        <i class="ph ph-shopping-cart-simple"></i> Añadir al Carrito
+                    </button>
+                </div>
+            </div>
+            <button class="modal-next"><i class="ph ph-caret-right"></i></button>
+        </div>
+        <div id="modal-thumbnails" class="modal-thumbnails"></div>
+    </div>
+
+    <!-- Nosotros -->
+    <section id="nosotros" class="about-us">
+        <div class="about-container">
+            <div class="about-image">
+                <img src="assets/nosotros_real.jpg" alt="Boutique Eliana Magali" class="brand-img-zoom">
+            </div>
+            <div class="about-text">
+                <span class="badge">Nuestra Esencia</span>
+                <h2>Moda con Alma de Familia</h2>
+                <p>En <strong>CLOTHES EM</strong>, creemos que la moda es más que solo prendas; es una forma de
+                    expresión y unión familiar. Nacimos con el sueño de ofrecer piezas exclusivas que combinen la
+                    elegancia clásica con la comodidad necesaria para el día a día.</p>
+                <p>Nuestra misión es vestir a cada miembro de tu familia con la misma dedicación y calidad que
+                    elegiríamos para la nuestra. Cada textura y diseño es seleccionado cuidadosamente para asegurar que
+                    te sientas especial en cada ocasión.</p>
+
+                <div class="about-features">
+                    <div class="feature">
+                        <i class="ph ph-medal"></i>
+                        <span>Calidad Premium</span>
+                    </div>
+                    <div class="feature">
+                        <i class="ph ph-heart"></i>
+                        <span>Pasión por el Detalle</span>
+                    </div>
+                    <div class="feature">
+                        <i class="ph ph-truck"></i>
+                        <span>Envíos Seguros</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h2>ClothesEM</h2>
+                <p>Moda premium diseñada para quienes buscan la elegancia en cada detalle. Calidad superior para toda la
+                    familia.</p>
+            </div>
+            <div class="footer-links">
+                <h3>Enlaces</h3>
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#coleccion">Colección</a></li>
+                    <li><a href="#nosotros">Nosotros</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h3>Síguenos</h3>
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/clothes_e.m/" target="_blank" aria-label="Instagram"><i
+                            class="ph ph-instagram-logo"></i></a>
+                    <a href="https://wa.me/3464590442" target="_blank" aria-label="WhatsApp"><i
+                            class="ph ph-whatsapp-logo"></i></a>
+                </div>
+
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 CLOTHES EM. Todos los derechos reservados. <a href="admin.html" style="opacity: 0.2; font-size: 0.7rem;">Admin</a></p>
+        </div>
+    </footer>
+
+    <!-- Carrito Drawer -->
+    <div id="cart-drawer" class="cart-drawer">
+        <div class="cart-header">
+            <h3>Tu Pedido</h3>
+            <button id="close-cart" class="close-btn"><i class="ph ph-x"></i></button>
+        </div>
+        <div class="cart-items">
+            <!-- Items se cargan por JS -->
+            <div class="empty-cart">Tu carrito está vacío</div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="total-price">$0.00</span>
+            </div>
+            <button id="confirm-order" class="btn btn-primary checkout-btn">Finalizar Compra</button>
+        </div>
+    </div>
+    <div id="cart-overlay" class="cart-overlay"></div>
+
+    <!-- Modal de Checkout -->
+    <div id="checkout-modal" class="modal">
+        <div class="modal-content checkout-content">
+            <div class="checkout-header">
+                <h2>Finalizar Compra</h2>
+                <span class="close-checkout" id="close-checkout"><i class="ph ph-x"></i></span>
+            </div>
+            
+            <div class="checkout-layout">
+                <div class="checkout-form">
+                    <h3>Datos de Envío</h3>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Nombre Completo</label><input type="text" id="cust-name" placeholder="Ej: Maria Perez"></div>
+                        <div class="form-group"><label>WhatsApp / Teléfono</label><input type="text" id="cust-phone" placeholder="Ej: 3464590442"></div>
+                        <div class="form-group" style="grid-column: 1/-1;"><label>Dirección de Entrega</label><input type="text" id="cust-address" placeholder="Calle y número"></div>
+                        <div class="form-group"><label>Ciudad</label><input type="text" id="cust-city" placeholder="Ej: Rosario"></div>
+                        <div class="form-group"><label>Código Postal</label><input type="text" id="cust-zip" placeholder="Ej: 2000"></div>
+                    </div>
+                    
+                    <h3>Método de Pago</h3>
+                    <div class="payment-methods">
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="mercadopago" checked>
+                            <div class="payment-card">
+                                <i class="ph ph-credit-card"></i>
+                                <span>Mercado Pago / Tarjetas</span>
+                            </div>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="transferencia">
+                            <div class="payment-card">
+                                <i class="ph ph-bank"></i>
+                                <span>Transferencia / Alias</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="checkout-summary">
+                    <h3>Resumen del Pedido</h3>
+                    <div id="checkout-items" class="checkout-items-list"></div>
+                    <div class="summary-totals">
+                        <div class="total-row"><span>Subtotal:</span><span id="check-subtotal">$0</span></div>
+                        <div class="total-row"><span>Envío:</span><span style="color: #10b981; font-weight: 700;">Gratis</span></div>
+                        <div class="total-row grand-total"><span>Total:</span><span id="check-total">$0</span></div>
+                    </div>
+                    <button id="pay-button" class="btn btn-primary" style="width: 100%; margin-top: 2rem; height: 60px; font-weight: 700; font-size: 1.1rem; border-radius: 12px;">
+                        REALIZAR PAGO
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notificación Toast -->
+    <div id="toast" class="toast">
+        <i class="ph-fill ph-check-circle"></i>
+        <span>Producto añadido al carrito</span>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+    
+    <script src="firebase-config.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
