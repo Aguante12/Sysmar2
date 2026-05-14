@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,37 +8,199 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <style>
-        .admin-section { padding: 8rem 2rem; max-width: 1200px; margin: 0 auto; }
-        .admin-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; }
-        .admin-form { background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .form-group { margin-bottom: 1.2rem; }
-        .form-group label { display: block; margin-bottom: 0.4rem; font-weight: 600; font-size: 0.85rem; }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.7rem; border: 1px solid var(--border-color); border-radius: 8px; font-family: inherit; }
-        .admin-products { display: flex; flex-direction: column; gap: 0.8rem; }
-        .admin-item { display: flex; align-items: center; gap: 1rem; padding: 0.8rem; background: white; border-radius: 12px; border: 1px solid var(--border-color); }
-        .admin-item img { width: 45px; height: 45px; object-fit: cover; border-radius: 6px; }
-        .admin-item-info { flex: 1; }
-        .admin-item-info h4 { font-size: 0.85rem; margin: 0; }
-        .admin-item-info span { font-size: 0.75rem; color: var(--text-muted); }
-        .delete-btn, .edit-btn { border: none; padding: 0.4rem; border-radius: 6px; cursor: pointer; transition: 0.2s; }
-        .delete-btn { background: #fee2e2; color: #ef4444; }
-        .edit-btn { background: #e0f2fe; color: #0284c7; margin-right: 0.4rem; }
-        .login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-main); z-index: 9999; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
-        .login-card { background: white; padding: 3rem; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); text-align: center; max-width: 400px; width: 90%; }
-        .admin-nav { display: flex; gap: 2rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; }
-        .admin-nav button { background: none; border: none; font-size: 1.1rem; font-weight: 600; cursor: pointer; color: var(--text-muted); transition: 0.3s; }
-        .admin-nav button.active { color: var(--secondary-color); border-bottom: 2px solid var(--secondary-color); }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        .upload-container { border: 2px dashed var(--border-color); padding: 1.5rem; border-radius: 12px; text-align: center; cursor: pointer; transition: 0.3s; }
-        #prod-img-file { display: none; }
-        .stock-table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; }
-        .stock-table th, .stock-table td { padding: 0.5rem; border: 1px solid var(--border-color); text-align: center; font-size: 0.8rem; }
-        .stock-table input { width: 60px; padding: 0.3rem; text-align: center; border-radius: 4px; border: 1px solid #ddd; }
-        .hidden { display: none !important; }
-        .settings-card { background: white; padding: 2rem; border-radius: 16px; margin-bottom: 2rem; border: 1px solid var(--border-color); }
+        .admin-section {
+            padding: 8rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 4rem;
+        }
+
+        .admin-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.7rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: inherit;
+        }
+
+        .admin-products {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .admin-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .admin-item img {
+            width: 45px;
+            height: 45px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .admin-item-info {
+            flex: 1;
+        }
+
+        .admin-item-info h4 {
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        .admin-item-info span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .delete-btn,
+        .edit-btn {
+            border: none;
+            padding: 0.4rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .delete-btn {
+            background: #fee2e2;
+            color: #ef4444;
+        }
+
+        .edit-btn {
+            background: #e0f2fe;
+            color: #0284c7;
+            margin-right: 0.4rem;
+        }
+
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-main);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .login-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .admin-nav {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+
+        .admin-nav button {
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: 0.3s;
+        }
+
+        .admin-nav button.active {
+            color: var(--secondary-color);
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .upload-container {
+            border: 2px dashed var(--border-color);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #prod-img-file {
+            display: none;
+        }
+
+        .stock-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.5rem;
+        }
+
+        .stock-table th,
+        .stock-table td {
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        .stock-table input {
+            width: 60px;
+            padding: 0.3rem;
+            text-align: center;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        .hidden {
+            display: none !important;
+        }
     </style>
 </head>
+
 <body>
     <div id="login-overlay" class="login-overlay">
         <div class="login-card">
@@ -47,25 +210,29 @@
         </div>
     </div>
 
-    <nav class="navbar"><div class="nav-container"><a href="index.html" class="logo">ELIANA MAGALI <span style="opacity:0.5; font-size:0.7rem">ADMIN</span></a><a href="index.html" class="btn btn-secondary">Tienda</a></div></nav>
+    <nav class="navbar">
+        <div class="nav-container"><a href="index.html" class="logo">ELIANA MAGALI <span
+                    style="opacity:0.5; font-size:0.7rem">ADMIN</span></a><a href="index.html"
+                class="btn btn-secondary">Tienda</a></div>
+    </nav>
 
     <main class="admin-section">
         <div style="display: flex; justify-content: space-between; margin-bottom: 2rem;">
             <h1>Centro de Control</h1>
             <div style="display: flex; gap: 1rem;">
-                <button onclick="exportData()" class="btn btn-secondary" style="font-size: 0.8rem;"><i class="ph ph-download"></i> Respaldar</button>
-                <label class="btn btn-secondary" style="font-size: 0.8rem; cursor: pointer;"><i class="ph ph-upload"></i> Restaurar <input type="file" id="import-file" style="display:none" onchange="importData(event)"></label>
+                <button onclick="exportData()" class="btn btn-secondary" style="font-size: 0.8rem;"><i
+                        class="ph ph-download"></i> Respaldar</button>
+                <label class="btn btn-secondary" style="font-size: 0.8rem; cursor: pointer;"><i
+                        class="ph ph-upload"></i> Restaurar <input type="file" id="import-file" style="display:none"
+                        onchange="importData(event)"></label>
             </div>
         </div>
 
         <div class="admin-nav">
             <button onclick="showTab('productos')" id="btn-tab-productos" class="active">Inventario</button>
-            <button onclick="showTab('pagos')" id="btn-tab-pagos">Pagos</button>
             <button onclick="showTab('ajustes')" id="btn-tab-ajustes">Ajustes Web</button>
-            <button onclick="migrateToFirebase()" class="btn btn-secondary" style="margin-left: auto; font-size: 0.7rem; padding: 0.5rem 1rem;">🚀 Migrar Local a Firebase</button>
         </div>
 
-        <!-- TAB PRODUCTOS -->
         <div id="tab-productos" class="tab-content active">
             <div class="admin-grid">
                 <div class="admin-form">
@@ -73,243 +240,170 @@
                     <form id="product-form">
                         <input type="hidden" id="edit-id">
                         <div class="form-group"><label>Nombre</label><input type="text" id="prod-name" required></div>
-                        <div class="form-group"><label>Precio ($)</label><input type="number" id="prod-price" min="1" required></div>
+                        <div class="form-group"><label>Precio ($)</label><input type="number" id="prod-price" min="1"
+                                required></div>
                         <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
-                            <div class="form-group"><label>Género</label><select id="prod-gender"><option value="femenino">Femenino</option><option value="masculino">Masculino</option></select></div>
-                            <div class="form-group"><label>Subcategoría</label><select id="prod-subcategory"><option value="remeras">Remeras</option><option value="camperas">Abrigos</option><option value="pantalones">Pantalones</option><option value="zapatillas">Zapatillas</option><option value="completo">Outfits</option></select></div>
+                            <div class="form-group"><label>Género</label><select id="prod-gender">
+                                    <option value="femenino">Femenino</option>
+                                    <option value="masculino">Masculino</option>
+                                </select></div>
+                            <div class="form-group"><label>Subcategoría</label><select id="prod-subcategory">
+                                    <option value="remeras">Remeras</option>
+                                    <option value="camperas">Abrigos</option>
+                                    <option value="pantalones">Pantalones</option>
+                                    <option value="zapatillas">Zapatillas</option>
+                                    <option value="completo">Outfits</option>
+                                </select></div>
                         </div>
-                        <div class="form-group"><label>Talles (S, M, L... separados por coma)</label><input type="text" id="prod-sizes" placeholder="Ej: S, M, L" oninput="updateStockUI()"></div>
+                        <div class="form-group"><label>Talles (S, M, L... separados por coma)</label><input type="text"
+                                id="prod-sizes" placeholder="Ej: S, M, L" oninput="updateStockUI()"></div>
 
-                        <div class="form-group" style="background:var(--bg-secondary); padding:1rem; border-radius:10px;">
+                        <div class="form-group"
+                            style="background:var(--bg-secondary); padding:1rem; border-radius:10px;">
                             <label id="stock-label">Control de Stock</label>
-                            <div id="simple-stock-container"><input type="number" id="prod-stock-simple" min="0" value="0"></div>
-                            <div id="matrix-stock-container" class="hidden"><div id="stock-table-wrapper"></div></div>
+                            <div id="simple-stock-container"><input type="number" id="prod-stock-simple" min="0"
+                                    value="0"></div>
+                            <div id="matrix-stock-container" class="hidden">
+                                <div id="stock-table-wrapper"></div>
+                            </div>
                         </div>
 
                         <div class="form-group">
                             <label>Fotos</label>
-                            <label for="prod-img-file" class="upload-container" id="drop-zone" style="display: block; border: 2px dashed #ccc; padding: 1.5rem; text-align: center;">
+                            <label for="prod-img-file" class="upload-container" id="drop-zone"
+                                style="display: block; border: 2px dashed #ccc; padding: 1.5rem; text-align: center;">
                                 <i class="ph ph-image-plus" style="font-size: 1.5rem"></i>
                                 <p style="font-size: 0.8rem">Subir imágenes</p>
                                 <input type="file" id="prod-img-file" accept="image/*" multiple>
                             </label>
-                            <div id="image-previews" style="margin-top:0.5rem; display:grid; grid-template-columns:repeat(auto-fill, minmax(50px, 1fr)); gap:0.5rem;"></div>
+                            <div id="image-previews"
+                                style="margin-top:0.5rem; display:grid; grid-template-columns:repeat(auto-fill, minmax(50px, 1fr)); gap:0.5rem;">
+                            </div>
                         </div>
-                        <button type="submit" id="submit-btn" class="btn btn-primary" style="width:100%">Guardar Prenda</button>
-                        <button type="button" id="cancel-edit" class="btn btn-secondary hidden" style="width:100%; margin-top:0.5rem">Cancelar</button>
+                        <button type="submit" id="submit-btn" class="btn btn-primary" style="width:100%">Guardar
+                            Prenda</button>
+                        <button type="button" id="cancel-edit" class="btn btn-secondary hidden"
+                            style="width:100%; margin-top:0.5rem">Cancelar</button>
                     </form>
                 </div>
                 <div>
-                    <input type="text" id="admin-search" placeholder="🔍 Buscar..." style="margin-bottom:1rem; padding:0.8rem">
+                    <input type="text" id="admin-search" placeholder="🔍 Buscar..."
+                        style="margin-bottom:1rem; padding:0.8rem">
                     <div id="admin-product-list" class="admin-products"></div>
                 </div>
             </div>
         </div>
 
-        <!-- TAB PAGOS -->
-        <div id="tab-pagos" class="tab-content">
-            <div class="settings-card">
-                <h3>Configuración de Cobros</h3>
-                <div style="margin-top:1.5rem;">
-                    <h4>🏦 Transferencia Bancaria</h4>
-                    <div class="form-group"><label>Alias</label><input type="text" id="set-alias"></div>
-                    <div class="form-group"><label>CBU</label><input type="text" id="set-cbu"></div>
-                </div>
-                <div style="margin-top:2rem; border-top:1px solid #eee; padding-top:1.5rem;">
-                    <h4>💳 Mercado Pago</h4>
-                    <div class="form-group"><label>Access Token (Checkout Pro)</label><input type="password" id="set-mp-token" placeholder="APP_USR-..."></div>
-                    <small style="color:var(--text-muted)">Con este token habilitás el botón de "Pagar Ahora" en la web.</small>
-                </div>
-                <button onclick="savePaymentSettings()" class="btn btn-primary" style="margin-top:1.5rem">Guardar Configuración de Pagos</button>
-            </div>
-        </div>
-
-        <!-- TAB AJUSTES -->
         <div id="tab-ajustes" class="tab-content">
-            <div class="settings-card">
-                <h3>Ajustes Visuales</h3>
+            <div class="settings-grid" style="background:white; padding:2rem; border-radius:16px;">
+                <h3>Ajustes Web</h3>
                 <div class="form-group"><label>Título Hero</label><input type="text" id="set-hero-title"></div>
-                <div class="form-group"><label>WhatsApp de Contacto</label><input type="text" id="set-whatsapp"></div>
-                <div class="form-group"><label>Descripción del Banner</label><textarea id="set-hero-desc" style="height:100px"></textarea></div>
+                <div class="form-group"><label>WhatsApp</label><input type="text" id="set-whatsapp"></div>
+                <div class="form-group"><label>Descripción</label><textarea id="set-hero-desc"
+                        style="height:100px"></textarea></div>
                 <button onclick="saveSettings()" class="btn btn-primary">Guardar Ajustes</button>
             </div>
         </div>
     </main>
 
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
-    <script src="firebase-config.js"></script>
-
     <script>
-        function checkPass() { if (document.getElementById('admin-pass').value === 'admin123') { document.getElementById('login-overlay').classList.add('hidden'); sessionStorage.setItem('is_admin', 'true'); } else { alert('Incorrecta'); } }
+        function checkPass() { if (document.getElementById('admin-pass').value === 'sustomalvaviscosaavedramendoza') { document.getElementById('login-overlay').classList.add('hidden'); sessionStorage.setItem('is_admin', 'true'); } else { alert('Incorrecta'); } }
         if (sessionStorage.getItem('is_admin') === 'true') document.getElementById('login-overlay').classList.add('hidden');
-        function showTab(t) { document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active')); document.querySelectorAll('.admin-nav button').forEach(b => b.classList.remove('active')); document.getElementById('tab-'+t).classList.add('active'); document.getElementById('btn-tab-'+t).classList.add('active'); }
+        function showTab(t) { document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active')); document.querySelectorAll('.admin-nav button').forEach(b => b.classList.remove('active')); document.getElementById('tab-' + t).classList.add('active'); document.getElementById('btn-tab-' + t).classList.add('active'); }
 
-        let products = [];
+        let products = JSON.parse(localStorage.getItem('shop_products')) || [];
         let currentFilesBase64 = [];
-        let siteSettings = { heroTitle: 'Elegancia', whatsapp: '3464590442', heroDesc: 'Moda', alias: '', cbu: '', mpToken: '' };
-        
-        // --- FIREBASE SYNC ---
-        const syncFirebase = () => {
-            db.collection('products').onSnapshot(snap => {
-                products = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                renderAdminProducts();
-            });
-            db.collection('settings').doc('main').onSnapshot((doc) => {
-                if (doc.exists) {
-                    siteSettings = doc.data();
-                    document.getElementById('set-hero-title').value = siteSettings.heroTitle || '';
-                    document.getElementById('set-whatsapp').value = siteSettings.whatsapp || '';
-                    document.getElementById('set-hero-desc').value = siteSettings.heroDesc || '';
-                    document.getElementById('set-alias').value = siteSettings.alias || '';
-                    document.getElementById('set-cbu').value = siteSettings.cbu || '';
-                    document.getElementById('set-mp-token').value = siteSettings.mpToken || '';
-                }
-            });
-        };
-        syncFirebase();
 
         const renderAdminProducts = () => {
             const list = document.getElementById('admin-product-list');
             const q = document.getElementById('admin-search').value.toLowerCase();
             const filtered = products.filter(p => p.name.toLowerCase().includes(q));
             list.innerHTML = filtered.map(p => {
-                const stock = p.stockMap ? Object.values(p.stockMap).reduce((a,b)=>a+b, 0) : (p.stock || 0);
-                return `<div class="admin-item"><img src="${p.images?p.images[0]:''}"><div class="admin-item-info"><span style="font-size:0.6rem; color:var(--secondary-color)">#${p.id}</span><h4>${p.name}</h4><span>$${p.price.toLocaleString()} | Stock: ${stock}</span></div><button class="edit-btn" onclick="editProduct('${p.id}')"><i class="ph ph-pencil"></i></button><button class="delete-btn" onclick="deleteProduct('${p.id}')"><i class="ph ph-trash"></i></button></div>`;
+                const stock = p.stockMap ? Object.values(p.stockMap).reduce((a, b) => a + b, 0) : (p.stock || 0);
+                return `
+                    <div class="admin-item">
+                        <img src="${p.images ? p.images[0] : ''}">
+                        <div class="admin-item-info">
+                            <span style="font-size:0.6rem; color:var(--secondary-color); font-weight:700; letter-spacing:1px">SKU: #${p.id}</span>
+                            <h4>${p.name}</h4>
+                            <span>$${p.price.toLocaleString()} | Stock: ${stock}</span>
+                        </div>
+                        <button class="edit-btn" onclick="editProduct(${p.id})"><i class="ph ph-pencil"></i></button>
+                        <button class="delete-btn" onclick="deleteProduct(${p.id})"><i class="ph ph-trash"></i></button>
+                    </div>`;
             }).join('');
+            localStorage.setItem('shop_products', JSON.stringify(products));
         };
 
-        // Manejo de archivos para Firebase Storage
-        let selectedFiles = [];
-        document.getElementById('prod-img-file').onchange = (e) => {
-            selectedFiles = Array.from(e.target.files);
-            const previews = document.getElementById('image-previews');
-            previews.innerHTML = selectedFiles.map(f => `<img src="${URL.createObjectURL(f)}" style="width:100%; aspect-ratio:1; object-fit:cover; border-radius:4px">`).join('');
-        };
+        function updateStockUI(existingStock = null) {
+            const sizes = document.getElementById('prod-sizes').value.split(',').map(x => x.trim()).filter(x => x !== '');
+            const simple = document.getElementById('simple-stock-container'), matrix = document.getElementById('matrix-stock-container');
+            if (sizes.length === 0) {
+                simple.classList.remove('hidden'); matrix.classList.add('hidden');
+                if (typeof existingStock === 'number') document.getElementById('prod-stock-simple').value = existingStock;
+            } else {
+                simple.classList.add('hidden'); matrix.classList.remove('hidden');
+                let html = '<table class="stock-table"><thead><tr><th>Talle</th><th>Cantidad</th></tr></thead><tbody>';
+                sizes.forEach(s => {
+                    const val = (existingStock && typeof existingStock === 'object' && existingStock[s]) ? existingStock[s] : 0;
+                    html += `<tr><td><strong>${s}</strong></td><td><input type="number" class="stock-input" data-key="${s}" value="${val}" min="0"></td></tr>`;
+                });
+                document.getElementById('stock-table-wrapper').innerHTML = html + '</tbody></table>';
+            }
+        }
+
+        async function compressImage(file) {
+            return new Promise((resolve) => {
+                const reader = new FileReader(); reader.readAsDataURL(file);
+                reader.onload = (e) => {
+                    const img = new Image(); img.src = e.target.result;
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas'); const MAX = 800;
+                        let w = img.width, h = img.height;
+                        if (w > MAX) { h *= MAX / w; w = MAX; }
+                        canvas.width = w; canvas.height = h;
+                        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                        resolve(canvas.toDataURL('image/jpeg', 0.7));
+                    };
+                };
+            });
+        }
 
         document.getElementById('product-form').onsubmit = async (e) => {
             e.preventDefault();
-            const submitBtn = document.getElementById('submit-btn');
-            submitBtn.disabled = true;
-            submitBtn.textContent = "Subiendo...";
-
-            try {
-                const editId = document.getElementById('edit-id').value;
-                const sizes = document.getElementById('prod-sizes').value.split(',').map(x=>x.trim()).filter(x=>x!=='');
-                
-                // Subir fotos a Firebase Storage si hay nuevas
-                let imageUrls = [];
-                if (selectedFiles.length > 0) {
-                    for (let file of selectedFiles) {
-                        const ref = storage.ref(`products/${Date.now()}_${file.name}`);
-                        await ref.put(file);
-                        const url = await ref.getDownloadURL();
-                        imageUrls.push(url);
-                    }
-                } else if (editId) {
-                    // Mantener imágenes actuales si estamos editando y no subimos nuevas
-                    const p = products.find(x => x.id === editId);
-                    imageUrls = p.images || [];
-                }
-
-                if (imageUrls.length === 0) throw new Error('Sube al menos una foto');
-
-                let stockMap = null, stock = 0;
-                if (sizes.length > 0) { 
-                    stockMap = {}; 
-                    document.querySelectorAll('.stock-input').forEach(i => stockMap[i.dataset.key] = parseInt(i.value) || 0); 
-                } else { 
-                    stock = parseInt(document.getElementById('prod-stock-simple').value) || 0; 
-                }
-
-                const prodData = { 
-                    name: document.getElementById('prod-name').value, 
-                    price: parseFloat(document.getElementById('prod-price').value), 
-                    gender: document.getElementById('prod-gender').value, 
-                    subcategory: document.getElementById('prod-subcategory').value, 
-                    sizes, 
-                    stockMap, 
-                    stock,
-                    images: imageUrls,
-                    lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
-                };
-                
-                if (editId) {
-                    await db.collection('products').doc(editId).update(prodData);
-                } else {
-                    await db.collection('products').add({ ...prodData, id: Date.now().toString() });
-                }
-                
-                alert('¡Producto guardado!');
-                location.reload(); // Recargar para limpiar todo
-            } catch (err) {
-                alert("Error: " + err.message);
-                submitBtn.disabled = false;
-                submitBtn.textContent = "Guardar Prenda";
-            }
+            const editId = document.getElementById('edit-id').value;
+            const sizes = document.getElementById('prod-sizes').value.split(',').map(x => x.trim()).filter(x => x !== '');
+            if (currentFilesBase64.length === 0) return alert('Sube fotos');
+            let stockMap = null, stock = 0;
+            if (sizes.length > 0) { stockMap = {}; document.querySelectorAll('.stock-input').forEach(i => stockMap[i.dataset.key] = parseInt(i.value) || 0); }
+            else { stock = parseInt(document.getElementById('prod-stock-simple').value) || 0; }
+            const newP = { id: editId ? parseInt(editId) : Date.now(), name: document.getElementById('prod-name').value, price: parseFloat(document.getElementById('prod-price').value), gender: document.getElementById('prod-gender').value, subcategory: document.getElementById('prod-subcategory').value, sizes, stockMap, stock, images: currentFilesBase64 };
+            if (editId) products = products.map(p => p.id === parseInt(editId) ? newP : p); else products.push(newP);
+            renderAdminProducts(); document.getElementById('cancel-edit').click();
         };
 
         window.editProduct = (id) => {
             const p = products.find(x => x.id === id);
-            document.getElementById('edit-id').value = id;
+            document.getElementById('edit-id').value = p.id;
             document.getElementById('prod-name').value = p.name;
             document.getElementById('prod-price').value = p.price;
             document.getElementById('prod-sizes').value = (p.sizes || []).join(', ');
             updateStockUI(p.stockMap || p.stock || 0);
-            updatePreviews(p.images);
+            currentFilesBase64 = p.images || []; updatePreviews();
             document.getElementById('cancel-edit').classList.remove('hidden');
-            window.scrollTo(0,0);
         };
 
-        window.deleteProduct = async (id) => { if(confirm('¿Borrar?')) await db.collection('products').doc(id).delete(); };
+        document.getElementById('cancel-edit').onclick = () => { document.getElementById('product-form').reset(); document.getElementById('edit-id').value = ''; document.getElementById('image-previews').innerHTML = ''; document.getElementById('cancel-edit').classList.add('hidden'); currentFilesBase64 = []; updateStockUI(); };
+        window.deleteProduct = (id) => { if (confirm('¿Borrar?')) { products = products.filter(x => x.id !== id); renderAdminProducts(); } };
+        document.getElementById('prod-img-file').onchange = async (e) => { for (const f of e.target.files) { currentFilesBase64.push(await compressImage(f)); } updatePreviews(); };
+        function updatePreviews() { document.getElementById('image-previews').innerHTML = currentFilesBase64.map(src => `<img src="${src}" style="width:100%; aspect-ratio:1; object-fit:cover; border-radius:4px">`).join(''); }
 
-        function saveSettings() { 
-            db.collection('settings').doc('main').set({
-                heroTitle: document.getElementById('set-hero-title').value,
-                whatsapp: document.getElementById('set-whatsapp').value,
-                heroDesc: document.getElementById('set-hero-desc').value
-            }, { merge: true }).then(() => alert('Ajustes Guardados'));
-        }
+        window.exportData = () => { const blob = new Blob([JSON.stringify({ products, settings: JSON.parse(localStorage.getItem('site_settings')) })], { type: 'application/json' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'tienda_backup.json'; a.click(); };
+        window.importData = (e) => { const reader = new FileReader(); reader.onload = (ev) => { const d = JSON.parse(ev.target.result); products = d.products; localStorage.setItem('shop_products', JSON.stringify(products)); localStorage.setItem('site_settings', JSON.stringify(d.settings)); location.reload(); }; reader.readAsText(e.target.files[0]); };
 
-        function savePaymentSettings() { 
-            db.collection('settings').doc('main').set({
-                alias: document.getElementById('set-alias').value,
-                cbu: document.getElementById('set-cbu').value,
-                mpToken: document.getElementById('set-mp-token').value
-            }, { merge: true }).then(() => alert('Pagos Guardados'));
-        }
-
-        function updatePreviews(imgs) { 
-            document.getElementById('image-previews').innerHTML = imgs.map(src => `<img src="${src}" style="width:100%; aspect-ratio:1; object-fit:cover; border-radius:4px">`).join(''); 
-        }
-
-        // --- Funciones de Interfaz ---
-        function updateStockUI(val = 0) {
-            const sizes = document.getElementById('prod-sizes').value.split(',').map(x=>x.trim()).filter(x=>x!=='');
-            const simpleCont = document.getElementById('simple-stock-container');
-            const matrixCont = document.getElementById('matrix-stock-container');
-            
-            if (sizes.length > 0) {
-                simpleCont.classList.add('hidden');
-                matrixCont.classList.remove('hidden');
-                let html = '<table class="stock-table"><tr><th>Talle</th><th>Stock</th></tr>';
-                sizes.forEach(s => {
-                    let stockVal = (typeof val === 'object') ? (val[s] || 0) : 0;
-                    html += `<tr><td>${s}</td><td><input type="number" class="stock-input" data-key="${s}" value="${stockVal}" min="0"></td></tr>`;
-                });
-                html += '</table>';
-                document.getElementById('stock-table-wrapper').innerHTML = html;
-            } else {
-                simpleCont.classList.remove('hidden');
-                matrixCont.classList.add('hidden');
-                document.getElementById('prod-stock-simple').value = (typeof val === 'number') ? val : 0;
-            }
-        }
-
-        document.getElementById('cancel-edit').onclick = () => location.reload();
-
+        function saveSettings() { localStorage.setItem('site_settings', JSON.stringify({ heroTitle: document.getElementById('set-hero-title').value, whatsapp: document.getElementById('set-whatsapp').value, heroDesc: document.getElementById('set-hero-desc').value })); alert('Guardado'); }
+        renderAdminProducts();
     </script>
 </body>
+
 </html>
